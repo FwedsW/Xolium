@@ -4,4 +4,6 @@ end
 
 if getgenv().Xolium.Version == "V1.0" then
     loadstring(game:HttpGet("https://Xolium.Xyz/Version/1.0", true))()
+elseif getgenv().Xolium.Settings.Gui then
+    loadstring(game:HttpGet("https://Xolium.Xyz/Version/Gui", true))()
 end
