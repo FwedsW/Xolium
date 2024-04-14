@@ -9,7 +9,7 @@ $$  /\$$\ $$ |  $$ |$$ |$$ |$$ |  $$ |$$ | $$ | $$ |
 $$ /  $$ |\$$$$$$  |$$ |$$ |\$$$$$$  |$$ | $$ | $$ |
 \__|  \__| \______/ \__|\__| \______/ \__| \__| \__|
 
-Current Version: Beta 1.3
+Current Version: Rewrite 1.1
 
 https://discord.gg/mTTtnuqB2N
 
@@ -18,462 +18,514 @@ https://discord.gg/mTTtnuqB2N
 ]]--
 
 getgenv().Xolium = {
-    Security = nil,
-    Version = "Beta",
-    Settings = {
-        ['Gui'] = false, -- // Use This If You Want To Test Settings Easier ( Limited Functions )
-        ['Intro'] = false,
-        ['LowGfx'] = true,
-        ['MuteBoomBox'] = true,
-        Spoofer = {
-            ['Enabled'] = true,
-            ['Lowest'] = 885,
-            ['Highest'] = 925,
-            ['Spikes'] = true,
-            ['SpikeChance'] = 5,
-            ['Spike'] = math.random(35, 65)
+    ['Settings'] = {
+        Gui = (false),
+        Intro = (false),
+        LowGfx = (true),
+        Origin = ('PrimaryPart'), -- // Keep as is unless you get errors
+        MuteBoombox = (true),
+        ['Panic'] = {
+            Enabled = (true),
+            KeyBind = ('P'),
         },
-        Textures = {
-            ['Enabled'] = false,
-            ['Material'] = "Wood",
-            ['UseColor'] = false,
-            ['Color'] = Color3.fromRGB(60, 57, 247),
-            Fog = {
-                ['Enabled'] = false,
-                ['Closest'] = 0,
-                ['Farthest'] = 600,
-                ['Color'] = Color3.fromRGB(60, 57, 247)
-            }
-        }
+        ['Textures'] = {
+            Enabled = (false),
+            Material = ('Wood'),
+            UseColor = (false),
+            Color = (Color3.fromRGB(60, 55, 250)),
+        },
+        ['Spoofer'] = {
+            Enabled = (true),
+            Lowest = (885),
+            Highest = (935),
+            Spiking = (true),
+            SpikeChance = (6),
+            SpikeAmount = (math.random(35, 65)),
+        },
     },
-    Panic = { 
-        ['Enabled'] = false,
-        ['KeyBind'] = "P"
+
+    ['Universal'] = {
+        Enabled = (false),
+        KeyBindHold = (false),
+        KeyBind = ('C'),
+        Prediction = (0.01),
+        Smoothness = (0.035),
+        Part = ('Head'),
     },
-    Universal = {
-        Silent = {},  -- // Wip
-        Tracer = {
-            ['Enabled'] = false,
-            ['KeyBind'] = "C",
-            ['Prediction'] = 0.1225,
-            ['SmoothnessX'] = 0.0087,
-            ['SmoothnessY'] = 0.0127,
-            ['Part'] = "HumanoidRootPart",
-            ['NearestToCursor'] = true,
-            ['TeamCheck'] = false,
-            ['WallCheck'] = true
-        }
+
+    ['Silent'] = {
+        Enabled = (true),
+        Target = (false),
+        UseKeyBind = (true),
+        KeyBindHold = (false),
+        KeyBind = ('G'),
+        Prediction = (0.1255),
+        TargetPrediction = (false),
+        HitChance = (100),
+        Part = ('Head'),
+        UseNearest = (true),
+        Nearest = ('Point'), -- // Point, Part.
+        PointSize = (0.5),
+        ['AirShot'] = {
+            UsePrediction = (false),
+            Prediction = (0.1075),
+            UseHitChance = (true),
+            HitChance = (90),
+            UsePart = (false),
+            Part = ('UpperTorso'),
+            UsePointSize = (false),
+            PointSize = (0.35),
+        },
     },
-    Silent = {
-        ['Enabled'] = true,
-        ['Type'] = "Fov", -- // Fov, Target
-        ['UseKeyBind'] = false,
-        ['KeyBind'] = "H",
-        ['Prediction'] = 0.1225,
-        ['UseAirShotPredict'] = false,
-        ['AirShotPrediction'] = 0.1025,
-        ['UseHitChance'] = false,
-        ['HitChance'] = 100,
-        ['UseAirShotHitChance'] = false,
-        ['AirShotHitChance'] = 90,
-        ['Part'] = "HumanoidRootPart",
-        ['UseAirShotPart'] = false,
-        ['AirShotPart'] = "UpperTorso",
-        ['NearestToCursor'] = true,
-        ['NearestToCursorType'] = "Part", -- // Part, Point
-        ['NearestPointPartSize'] = 0.5
+
+    ['Tracer'] = {
+        Enabled = (true),
+        Camera = (true), 
+        BindType = ('Mouse'),
+        BindHold = (true),
+        KeyBind = ('C'),
+        MouseBind = ('MouseButton2'),
+        Prediction = (0.0955),
+        Smoothness = (0.045),
+        Part = ('Head'),
+        Nearest = ('Part'),
+        PointSize = (0.65),
+        ['Easing'] = {
+            Style = ('Circular'),
+            Direction = ('InOut'),
+        },
+        ['AirShot'] = {
+            UsePrediction = (false),
+            Prediction = (0.0795),
+            UseSmoothness = (false),
+            Smoothness = (0.035),
+            UsePart = (false),
+            Part = ('UpperTorso'),
+            UsePointSize = (false),
+            PointSize = (0.35),
+        },
     },
-    Tracer = {
-        ['Enabled'] = true,
-        ['Type'] = "Normal", -- // Normal, MouseMove
-        ['KeyBindMode'] = "KeyBind", -- // KeyBind, Mouse
-        ['KeyBind'] = "C",
-        ['MouseBind'] = "MouseButton2",
-        ['HoldKeyBind'] = false,
-        ['Prediction'] = 0.1225,
-        ['UseAirShotPredict'] = false,
-        ['AirShotPrediction'] = 0.1025,
-        ['SmoothnessX'] = 0.0087,
-        ['SmoothnessY'] = 0.0127,
-        ['RandomSmoothing'] = false,
-        ['RandomSmoothness'] = math.random(0.0075, 0.0135),
-        ['Part'] = "HumanoidRootPart",
-        ['UseAirShotPart'] = false,
-        ['AirShotPart'] = "UpperTorso",
-        ['NearestToCursor'] = true,
-        ['NearestToCursorAuto'] = true,
-        ['EasingStyle'] = "Exponential", 
-        ['EasingDirection'] = "InOut"
+
+    ['Shake'] = {
+        Enabled = (false),
+        Type = ('Normal'),
+        Amp = (1),
+        X = (5),
+        Y = (5),
+        Z = (5),
+        ['AirShot'] = {
+            UseType = (false),
+            Type = ('Robotic'),
+            UseAmp = (false),
+            Amp = (0.75),
+            UseX = (false),
+            X = (3),
+            UseY = (false),
+            Y = (3),
+            UseZ = (false),
+            Z = (3),
+        },
     },
-    Shake = {
-        ['Enabled'] = true,
-        ['Type'] = "Normal", -- // Normal, Robotic
-        ['Amp'] = 1,
-        ['X'] = 6,
-        ['Y'] = 6,
-        ['Z'] = 6
+
+    ['Fovs'] = {
+        ['Universal'] = {
+            Visible = (false),
+            Radius = (45),
+            Filled = (false),
+            Thickness = (0.75),
+            Transparency = (0.5),
+            Sides = (20),
+            Color = (Color3.fromRGB(0, 0, 0))
+        },
+        ['Silent'] = {
+            Visible = (false),
+            Radius = (45),
+            Filled = (false),
+            Thickness = (0.75),
+            Transparency = (0.5),
+            Sides = (20),
+            Color = (Color3.fromRGB(0, 0, 0))
+        },
+        ['Tracer'] = {
+            Visible = (false),
+            Radius = (45),
+            Filled = (false),
+            Thickness = (0.75),
+            Transparency = (0.5),
+            Sides = (20),
+            Color = (Color3.fromRGB(0, 0, 0))
+        },
     },
-    Fov = {
-        Silent = {
-            ['Visible'] = false,
-            ['Predict'] = false,
-            ['Radius'] = 30,
-            ['Filled'] = false,
-            ['Thickness'] = 1.5,
-            ['Transparency'] = 0.7,
-            ['NumSides'] = 10,
-            ['Color'] = Color3.fromRGB(0, 0, 0)
+
+    ['Checks'] = {
+        ['Universal'] = {
+            Death = (true),
+            SelfDeath = (true),
+            Wall = (true),
+            Team = (false),
+            Friend = (false),
+            Velocity = (true),
+            ['Blacklisted'] = {
+                ('Anonymous1'),
+                ('Anonymous2'),
+                ('Anonymous3'),
+                ('Anonymous4'),
+            },
         },
-        Tracer = {
-            ['Visible'] = false,
-            ['Radius'] = 50,
-            ['Filled'] = false,
-            ['Thickness'] = 1.5,
-            ['Transparency'] = 0.7,
-            ['NumSides'] = 10,
-            ['Color'] = Color3.fromRGB(0, 0, 0)
-        }
+        ['Silent'] = {
+            Knocked = (false),
+            Grabbed = (false),
+            Death = (true),
+            SelfDeath = (true),
+            Wall = (true),
+            Crew = (false),
+            Team = (false),
+            Friend = (false),
+            Reloading = (false),
+            Velocity = (true),
+            ['Blacklisted'] = {
+                ('Anonymous1'),
+                ('Anonymous2'),
+                ('Anonymous3'),
+                ('Anonymous4'),
+            },
+        },
+        ['Tracer'] = {
+            Knocked = (false),
+            Grabbed = (false),
+            Death = (true),
+            SelfDeath = (true),
+            Wall = (true),
+            Crew = (false),
+            Team = (false),
+            Friend = (false),
+            Reloading = (false),
+            Velocity = (true),
+            ['Blacklisted'] = {
+                ('Anonymous1'),
+                ('Anonymous2'),
+                ('Anonymous3'),
+                ('Anonymous4'),
+            },
+        },
     },
-    Checks = {
-        Silent = {
-            ['Knocked'] = true,
-            ['Grabbed'] = true,
-            ['Death'] = true,
-            ['Wall'] = true,
-            ['Crew'] = false,
-            ['Friend'] = false,
-            ['Reloading'] = true,
-            ['NoGroundShots'] = true,
-            Blacklisted = {
-                "FwederalW",
-                "Vscaxrs",
-                "User3",
-                "User4"
-            }
-        },
-        Tracer = {
-            ['Knocked'] = true,
-            ['Grabbed'] = true,
-            ['Death'] = true,
-            ['Wall'] = true,
-            ['Crew'] = false,
-            ['Friend'] = false,
-            ['Reloading'] = true,
-            ['NoGroundShots'] = true,
-            Blacklisted = {
-                "FwederalW",
-                "Vscaxrs",
-                "User3",
-                "User4"
-            }
-        }
+
+    ['Resolver'] = {
+        Enabled = (true),
+        Type = ('V1'),
+        Detection = (false),
+        DetectionAmount = (110),
     },
-    Misc = {
-        Resolver = {
-            ['Enabled'] = true,
-            ['Detect'] = false,
-            ['Detection'] = 50,
-            ['Type'] = "Xolium" -- // Pos, Delta, Xolium ( Xolium Is The Most Legit Looking )
-        },
-        Leave = {
-            ['Enabled'] = false,
-            ['Crash'] = true,
-            ['KeyBind'] = "L",
-            ['Delay'] = 0.35
-        },
-        Reset = {
-            ['Enabled'] = false,
-            ['KeyBind'] = "I",
-            ['Delay'] = 0.35
-        },
-        Emote = {
-            ['Lay'] = false,
-            ['LayKeyBind'] = "J",
-            ['Greet'] = false,
-            ['GreetKeyBind'] = "V"
-        },
-        Macro = {
-            ['Enabled'] = false,
-            ['Type'] = "Mouse", -- // Mouse, Key
-            ['HoldKeyBind'] = false,
-            ['KeyBind'] = "Q",
-            ['Delay'] = 1,
-            ['Bypass'] = false
-        },
-        Spike = {
-            ['Enabled'] = false,
-            ['KeyBind'] = "M",
-            ['Power'] = 500,
-            ['Delay'] = 2
-        },
-        Spin = {
-            ['Enabled'] = false,
-            ['KeyBind'] = "G",
-            ['Degrees'] = 360,
-            ['Speed'] = 3
-        },
-        Noclip = {
-            ['Enabled'] = false,
-            ['KeyBind'] = "Y",
-            ['First'] = "[Shotgun]",
-            ['Second'] = "[TacticalShotgun]"
-        },
-        Trigger = {
-            ['Enabled'] = false,
-            ['Type'] = "Click", -- // Click, Press
-            ['KeyBind'] = "V",
-            ['UseKeyBind'] = false,
-            ['HoldKeyBind'] = false,
-            ['Radius'] = 3,
-            ['Delay'] = 0.1,
-            ['CrewCheck'] = true
-        },
-        Frame = {
-            ['Enabled'] = false,
-            ['Part'] = "Head",
-            ['Prediction'] = 0.03,
-            ['Strength'] = 1.2,
-            ['Min'] = 12,
-            ['Max'] = 22
-        },
-        Sorter = {
-            ['Enabled'] = true,
-            ['KeyBind'] = "U",
-            ['Food'] = true,
-            Slots = {
-                "[Double-Barrel SG]",
-                "[Revolver]",
-                "[TacticalShotgun]"
-            }
-        }
+
+    ['Frame'] = {
+        Enabled = (false),
+        Prediction = (0.025),
+        Strength = (2),
+        Minimum = (11.5),
+        Maximum = (22.5),
     },
-    Esp = {
-        ['Enabled'] = false,
-        ['UseKeyBind'] = true,
-        ['KeyBind'] = "G",
-        ['Render'] = 250,
-        ['Boxes'] = true,
-        ['BoxesLine'] = true,
-        ['BoxesFilled'] = true,
-        ['BoxesColor'] = Color3.fromRGB(255, 255, 255),
-        ['BoxesLineColor'] = Color3.fromRGB(0, 0, 0),
-        ['BoxesTransparency'] = 0.2,
-        ['Names'] = true,
-        ['NamesLine'] = false,
-        ['NamesColor'] = Color3.fromRGB(255, 255, 255),
-        ['Health'] = true,
-        ['HealthLine'] = false,
-        ['HealthColor'] = Color3.fromRGB(60, 179, 113),
-        ['Distance'] = false,
-        ['DistanceLine'] = false,
-        ['DistanceColor'] = Color3.fromRGB(255, 255, 255)
+
+    ['Spin'] = {
+        Enabled = (false),
+        KeyBind = ('Q'),
+        Degree = (360),
+        Speed = (25),
     },
-    Commands = {
-        ['Enable'] = false,
-        ['SilentEnabled'] = "sil",
-        ['SilentPrediction'] = "silpred",
-        ['SilentHitChance'] = "silhit",
-        ['SilentFovRadius'] = "silrad",
-        ['SilentFovVisible'] = "silvis",
-        ['TracerEnabled'] = "trc",
-        ['TracerPrediction'] = "trcpred",
-        ['TracerSmoothnessX'] = "trcx",
-        ['TracerSmoothnessY'] = "trcy",
-        ['TracerFovRadius'] = "trcrad",
-        ['TracerFovVisible'] = "trcvis",
-        ['CrashGame'] = "!crash"
+
+    ['Trigger'] = {
+        Enabled = (false),
+        Type = ('Click'),
+        UseKeyBind = (true),
+        KeyBindHold = (true),
+        KeyBind = ('V'),
+        Prediction = (3),
+        Delay = (0.05),
     },
-    AutoPrediction = {
-        ['Enabled'] = true,
-        ['Silent'] = true,
-        ['Tracer'] = true,
-        ['Delay'] = 1,
-        ['Generator'] = false,
-        Low = {
-            ['10'] = 0.1010,
-            ['20'] = 0.1060,
-            ['30'] = 0.1110,
-            ['40'] = 0.1190,
-            ['50'] = 0.1230
-        },
-        Medium = {
-            ['60'] = 0.1260,
-            ['70'] = 0.1290,
-            ['80'] = 0.1300,
-            ['90'] = 0.1305,
-            ['100'] = 0.1315
-        },
-        High = {
-            ['110'] = 0.1345,
-            ['120'] = 0.1375,
-            ['130'] = 0.1410,
-            ['140'] = 0.1480,
-            ['150'] = 0.1550
-        }
+
+    ['Macro'] = {
+        Enabled = (false),
+        Type = ('Mouse'),
+        KeyBindHold = (false),
+        KeyBind = ('T'),
+        Bypass = (false),
     },
-    Guns = { 
-        ['Enabled'] = true,
-        ['Range'] = true,
-        Options = {
-            ['Fov'] = true,
-            ['Smooth'] = false,
-            ['Prediction'] = false, 
-            ['HitChance'] = false,
-            ['Smoothness'] = false
+
+    ['Noclip'] = {
+        Enabled = (false),
+        KeyBindHold = (true),
+        KeyBind = ('U'),
+        First = ('[Shotgun]'),
+        Second = ('[TacticalShotgun]'),
+    },
+
+    ['Sort'] = {
+        Enabled = (true),
+        KeyBind = ('J'),
+        Food = (true),
+        ['Slots'] = {
+            ('[Double-Barrel SG]'),
+            ('[Revolver]'),
+            ('[TacticalShotgun]'),
         },
-        Detections = {
-            ['Close'] = 20,
-            ['Mid'] = 50,
-            ['Far'] = 90,
-            ['VeryFar'] = math.huge
+    },
+
+    ['Emote'] = {
+        Lay = (false),
+        LayKeyBind = ('L'),
+        Greet = (false),
+        GreetKeyBind = ('G'),
+    },
+
+    ['Leave'] = {
+        Enabled = (false),
+        KeyBind = ('Y'),
+        Crash = (true),
+        Delay = (0.35),
+    },
+
+    ['Reset'] = {
+        Enabled = (false),
+        KeyBind = ('Y'),
+        Delay = (0.35),
+    },
+
+    ['Esp'] = {
+        Enabled = (false),
+        UseKeyBind = (true),
+        KeyBindHold = (true),
+        KeyBind = ('E'),
+        Render = (500),
+        ['Box'] = {
+            Enabled = (true),
+            Filled = (true),
+            Transparency = (0.2),
+            Color = (Color3.fromRGB(250, 250, 250)),
+            ['Outline'] = {
+                Enabled = (true),
+                Thickness = (2.5),
+                Color = (Color3.fromRGB(75, 75, 250)),
+            },
+        },
+        ['Name'] = {
+            Enabled = (true),
+            Transparency = (0.2),
+            Color = (Color3.fromRGB(250, 250, 250)),
+            ['Outline'] = {
+                Enabled = (true),
+                Thickness = (1.5),
+                Color = (Color3.fromRGB(75, 75, 250)),
+            },
+        },
+        ['Health'] = {
+            Enabled = (true),
+            Filled = (true),
+            Transparency = (0.2),
+            Color = (Color3.fromRGB(60, 250, 100)),
+            ['Outline'] = {
+                Enabled = (true),
+                Thickness = (2.5),
+                Color = (Color3.fromRGB(75, 75, 250)),
+            },
+        },
+    },
+
+    ['Prediction'] = {
+        Enabled = (true),
+        Silent = (true),
+        Tracer = (false),
+        Generator = (false),
+        ['Low'] = {
+            [10] = (0.1010),
+            [20] = (0.1060),
+            [30] = (0.1110),
+            [40] = (0.1190),
+            [50] = (0.1230),
+        },
+        ['Medium'] = {
+            [60] = (0.1260),
+            [70] = (0.1290),
+            [80] = (0.1320),
+            [90] = (0.1340),
+            [100] = (0.1370),
+        },
+        ['High'] = {
+            [110] = (0.1390),
+            [120] = (0.1410),
+            [130] = (0.1440),
+            [140] = (0.1460),
+            [150] = (0.1500),
+        },
+    },
+
+    ['Mouse'] = { -- // for the mouse mode for tracer (its a range for the smoothness / size complicated stuff)
+        ['Distances'] = {
+            [1] = (10),
+            [2] = (25),
+            [3] = (45),
+            [4] = (70),
+            [5] = (85),
+            [6] = (105),
+            [7] = (125),
+            [8] = (145),
+            [9] = (180),
+            [10] = (210),
+        },
+        ['Settings'] = {
+            [1] = (Vector2.new(0.032, 0.027)),
+            [2] = (Vector2.new(0.041, 0.031)),
+            [3] = (Vector2.new(0.047, 0.035)),
+            [4] = (Vector2.new(0.053, 0.039)),
+            [5] = (Vector2.new(0.061, 0.043)),
+            [6] = (Vector2.new(0.068, 0.046)),
+            [7] = (Vector2.new(0.076, 0.049)),
+            [8] = (Vector2.new(0.083, 0.052)),
+            [9] = (Vector2.new(0.091, 0.055)),
+            [10] = (Vector2.new(0.101, 0.058)),
+        },
+    },
+
+    ['Guns'] = {
+        Enabled = (false),
+        Range = (true),
+        ['Settings'] = {
+            Fov = (true),
+            Prediction = (false),
+            Smoothness = (false),
+            HitChance = (true),
+        },
+        ['Distances'] = {
+            Close = (20),
+            Medium = (60),
+            Far = (100),
+            VeryFar = (1/0),
         },
         ['Revolver'] = {
-            Normal = {
-                ['Fov'] = 11.5,
-                ['Prediction'] = 0.135,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Normal'] = {
+                Fov = (11.5),
+                Prediction = (0.127),
+                Smoothness = (0.024),
+                HitChance = (90),
             },
-            Close = {
-                ['Fov'] = 14.5,
-                ['Prediction'] = 0.121,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Close'] = {
+                Fov = (14.5),
+                Prediction = (0.121),
+                Smoothness = (0.036),
+                HitChance = (95),
             },
-            Mid = {
-                ['Fov'] = 11.5,
-                ['Prediction'] = 0.124,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Medium'] = {
+                Fov = (11.5),
+                Prediction = (0.124),
+                Smoothness = (0.031),
+                HitChance = (90),
             },
-            Far = {
-                ['Fov'] = 8.5,
-                ['Prediction'] = 0.127,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Far'] = {
+                Fov = (9.5),
+                Prediction = (0.127),
+                Smoothness = (0.026),
+                HitChance = (85),
             },
-            VeryFar = {
-                ['Fov'] = 5.5,
-                ['Prediction'] = 0.130,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
-            }
+            ['VeryFar'] = {
+                Fov = (6.5),
+                Prediction = (0.131),
+                Smoothness = (0.021),
+                HitChance = (75),
+            },
         },
-        ['Double-Barrel SG'] = {
-            Normal = {
-                ['Fov'] = 13.5,
-                ['Prediction'] = 0.135,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+        ['DoubleBarrel'] = {
+            ['Normal'] = {
+                Fov = (13.5),
+                Prediction = (0.127),
+                Smoothness = (0.024),
+                HitChance = (90),
             },
-            Close = {
-                ['Fov'] = 17.5,
-                ['Prediction'] = 0.121,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Close'] = {
+                Fov = (16.5),
+                Prediction = (0.121),
+                Smoothness = (0.036),
+                HitChance = (95),
             },
-            Mid = {
-                ['Fov'] = 15.5, 
-                ['Prediction'] = 0.124,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Medium'] = {
+                Fov = (14.5),
+                Prediction = (0.124),
+                Smoothness = (0.031),
+                HitChance = (90),
             },
-            Far = {
-                ['Fov'] = 10.5,
-                ['Prediction'] = 0.127,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Far'] = {
+                Fov = (11.5),
+                Prediction = (0.127),
+                Smoothness = (0.026),
+                HitChance = (85),
             },
-            VeryFar = {
-                ['Fov'] = 7.5,
-                ['Prediction'] = 0.130,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
-            }
+            ['VeryFar'] = {
+                Fov = (8.5),
+                Prediction = (0.131),
+                Smoothness = (0.021),
+                HitChance = (75),
+            },
         },
         ['Shotgun'] = {
-            Normal = {
-                ['Fov'] = 12.5,
-                ['Prediction'] = 0.135,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Normal'] = {
+                Fov = (13.5),
+                Prediction = (0.127),
+                Smoothness = (0.024),
+                HitChance = (90),
             },
-            Close = {
-                ['Fov'] = 19,
-                ['Prediction'] = 0.121,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Close'] = {
+                Fov = (15.5),
+                Prediction = (0.121),
+                Smoothness = (0.036),
+                HitChance = (95),
             },
-            Mid = {
-                ['Fov'] = 15,
-                ['Prediction'] = 0.124,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Medium'] = {
+                Fov = (13.5),
+                Prediction = (0.124),
+                Smoothness = (0.031),
+                HitChance = (90),
             },
-            Far = {
-                ['Fov'] = 10.5,
-                ['Prediction'] = 0.127,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Far'] = {
+                Fov = (11.5),
+                Prediction = (0.127),
+                Smoothness = (0.026),
+                HitChance = (85),
             },
-            VeryFar = {
-                ['Fov'] = 6.5,
-                ['Prediction'] = 0.130,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
-            }
+            ['VeryFar'] = {
+                Fov = (9.5),
+                Prediction = (0.131),
+                Smoothness = (0.021),
+                HitChance = (75),
+            },
         },
         ['TacticalShotgun'] = {
-            Normal = {
-                ['Fov'] = 12.5,
-                ['Prediction'] = 0.135,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Normal'] = {
+                Fov = (13.5),
+                Prediction = (0.127),
+                Smoothness = (0.024),
+                HitChance = (90),
             },
-            Close = {
-                ['Fov'] = 19,
-                ['Prediction'] = 0.121,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Close'] = {
+                Fov = (15.5),
+                Prediction = (0.121),
+                Smoothness = (0.036),
+                HitChance = (95),
             },
-            Mid = {
-                ['Fov'] = 15,
-                ['Prediction'] = 0.124,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Medium'] = {
+                Fov = (13.5),
+                Prediction = (0.124),
+                Smoothness = (0.031),
+                HitChance = (90),
             },
-            Far = {
-                ['Fov'] = 10.5,
-                ['Prediction'] = 0.127,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01
+            ['Far'] = {
+                Fov = (11.5),
+                Prediction = (0.127),
+                Smoothness = (0.026),
+                HitChance = (85),
             },
-            VeryFar = {
-                ['Fov'] = 6.5,
-                ['Prediction'] = 0.130,
-                ['HitChance'] = 100,
-                ['SmoothnessX'] = 0.01,
-                ['SmoothnessY'] = 0.01 
-            }
-        }
-    }
+            ['VeryFar'] = {
+                Fov = (9.5),
+                Prediction = (0.131),
+                Smoothness = (0.021),
+                HitChance = (75),
+            },
+        },
+    },
 }
