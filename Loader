@@ -2,8 +2,8 @@ if not game.IsLoaded(game) then
     game.Loaded.Wait(game.Loaded)
 end
 
-if getgenv().Xolium.Version == "V1.0" then
-    loadstring(game:HttpGet("https://Xolium.Xyz/Version/1.0", true))()
-elseif getgenv().Xolium.Settings.Gui then
+if getgenv().Xolium.Settings['Gui'] then
     loadstring(game:HttpGet("https://Xolium.Xyz/Version/Gui", true))()
+else
+    loadstring(game:HttpGet("https://Xolium.Xyz/Version/Script", true))()
 end
