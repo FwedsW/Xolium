@@ -1,15 +1,25 @@
 --[[
 
-$$\   $$\           $$\ $$\                         
-$$ |  $$ |          $$ |\__|                        
-\$$\ $$  | $$$$$$\  $$ |$$\ $$\   $$\ $$$$$$\$$$$\  
- \$$$$  / $$  __$$\ $$ |$$ |$$ |  $$ |$$  _$$  _$$\ 
- $$  $$<  $$ /  $$ |$$ |$$ |$$ |  $$ |$$ / $$ / $$ |
-$$  /\$$\ $$ |  $$ |$$ |$$ |$$ |  $$ |$$ | $$ | $$ |
-$$ /  $$ |\$$$$$$  |$$ |$$ |\$$$$$$  |$$ | $$ | $$ |
-\__|  \__| \______/ \__|\__| \______/ \__| \__| \__|
-
-Current Version: Rewrite 1.1
+  ██       █                       █
+   ████    ███       █████        ████        ▀        ██      █
+   ████  ████       ███   ██      ███        ███       ██   ████       █      █
+   ████  ███       ███     ██     ███         ██       ██   ████     ████   █████
+      █████       ████     ██     ███         ██       ██    ███    ██   █  █  ████
+     █████        ████     ██     ████        ██       ███   ███    ██   █  █   ████
+     ███ ███      ████     ██     ████        ██       ███   ███   ███   ████    ███
+     ███ ███   ▓▓▓████     ██   ▓▓▓███        ███       ██   ██    ███   ███      ██
+     ███ ███  ▓▓   ████   ██  ░▓▓   ███       ███       ███████    ███     █      ██
+    ████ ████▓▓    ▓ █████   ░░▓    █████    █████▓▓    ██████   ▓▓███     ▓      ██
+    ▓      ▓       ▓     ▓    ▓▓░     ▓▓    ░▓     ▓▓     ▓    ▓▓▓        ▓▓       ▓
+  ▓▓▓      ▓      ▓▓░    ▓    ▓▓░     ▓▓    ░▓▓    ░▓░    ▓ ░░▓▓░       ░▓▓        ▓▓
+ ▓▓       ▓▓    ░░▓░░   ░▓▓ ░░   ░░░▓▓▓      ░▓▓▓  ░▓░ ░░▓▓ ░▓▓░        ░▓▓░     ░░▓▓
+ ▓▓░░  ░░▓▓░     ░▓░░   ░░▓▓▓░░  ░░▓▓░░      ░░░▓▓▓░▓░░▓▓▓░ ░▓░░        ░░░░    ░▓▓▓░
+ ░▓▓░░░░▓▓░░      ░      ░░░░    ░░▓░░            ░ ░ ░▓░░░  ░            ░     ░▓░░
+  ░░    ░░       ░░        ░░     ░░              ░ ░  ░    ░░           ░░      ░
+  ░     ░       ░░        ░░      ░               ░░░   ░░ ░░          ░░░       ░░
+ ░      ░░                 ░░░    ░                ░░░   ░░░           ░          ░
+ 
+Current Version: Rewrite 1.4
 
 https://discord.gg/mTTtnuqB2N
 
@@ -21,12 +31,15 @@ getgenv().Xolium = {
     ['Settings'] = {
         Gui = (false),
         Intro = (false),
+        Notify = (false),
         LowGfx = (true),
-        Origin = ('PrimaryPart'), -- // Keep as is unless you get errors
         MuteBoombox = (true),
-        ['Panic'] = {
+        Origin = ('PrimaryPart'), -- // Keep as is unless you get errors
+        ['Unload'] = {
             Enabled = (true),
             KeyBind = ('P'),
+            HoldTime = (2), -- // How many second(s) you have to hold the key to unload
+            Mods = (false), -- // Unloads if staff joins
         },
         ['Textures'] = {
             Enabled = (false),
@@ -55,17 +68,42 @@ getgenv().Xolium = {
 
     ['Silent'] = {
         Enabled = (true),
-        Target = (false),
+        Sticky = (false),
         UseKeyBind = (true),
         KeyBindHold = (false),
         KeyBind = ('G'),
         Prediction = (0.1255),
-        TargetPrediction = (false),
+        UseAdvancedPrediction = (false),
+        AdvancedPrediction = (Vector3.new(0.1235, 0.1055, 0.0795)),
+        StickyPrediction = (false),
         HitChance = (100),
         Part = ('Head'),
         UseNearest = (true),
         Nearest = ('Point'), -- // Point, Part.
         PointSize = (0.5),
+        ['Visualize'] = {
+            ['Dot'] = {
+                Enabled = (false),
+                Radius = (7.5),
+                Filled = (true),
+                Transparency = (0.5),
+                Color = (Color3.fromRGB(75, 75, 250)),
+            },
+            ['Tracer'] = {
+                Enabled = (false),
+                Thickness = (1),
+                Transparency = (0.5),
+                Color = (Color3.fromRGB(75, 75, 250)),
+            },
+        },
+        ['RemoteEvent'] = {
+            Enabled = (false),
+            Event = (game:GetService('ReplicatedStorage').MainEvent),
+            ['Arguments'] = (function(Destination)
+                local Arguments = {('UpdateMousePos'), (Destination)}
+                return (Arguments)
+            end)
+        },
         ['AirShot'] = {
             UsePrediction = (false),
             Prediction = (0.1075),
@@ -86,19 +124,22 @@ getgenv().Xolium = {
         KeyBind = ('C'),
         MouseBind = ('MouseButton2'),
         Prediction = (0.0955),
-        Smoothness = (0.045),
+        UseAdvancedPrediction = (false),
+        AdvancedPrediction = (Vector3.new(0.0925, 0.0695, 0.0595)),
+        Smoothness = (0.0215),
         Part = ('Head'),
-        Nearest = ('Part'),
+        UseNearest = (true),
+        Nearest = ('Part'), -- // Point, Part.
         PointSize = (0.65),
         ['Easing'] = {
-            Style = ('Circular'),
-            Direction = ('InOut'),
+            Style = ('Circular'), -- // https://create.roblox.com/docs/reference/engine/enums/EasingStyle
+            Direction = ('InOut'), -- // https://create.roblox.com/docs/reference/engine/enums/EasingDirection
         },
         ['AirShot'] = {
             UsePrediction = (false),
             Prediction = (0.0795),
             UseSmoothness = (false),
-            Smoothness = (0.035),
+            Smoothness = (0.0175),
             UsePart = (false),
             Part = ('UpperTorso'),
             UsePointSize = (false),
@@ -117,7 +158,7 @@ getgenv().Xolium = {
             UseType = (false),
             Type = ('Robotic'),
             UseAmp = (false),
-            Amp = (0.75),
+            Amp = (1),
             UseX = (false),
             X = (3),
             UseY = (false),
@@ -135,7 +176,7 @@ getgenv().Xolium = {
             Thickness = (0.75),
             Transparency = (0.5),
             Sides = (20),
-            Color = (Color3.fromRGB(0, 0, 0))
+            Color = (Color3.fromRGB(75, 75, 250))
         },
         ['Silent'] = {
             Visible = (false),
@@ -144,7 +185,7 @@ getgenv().Xolium = {
             Thickness = (0.75),
             Transparency = (0.5),
             Sides = (20),
-            Color = (Color3.fromRGB(0, 0, 0))
+            Color = (Color3.fromRGB(75, 75, 250))
         },
         ['Tracer'] = {
             Visible = (false),
@@ -153,7 +194,7 @@ getgenv().Xolium = {
             Thickness = (0.75),
             Transparency = (0.5),
             Sides = (20),
-            Color = (Color3.fromRGB(0, 0, 0))
+            Color = (Color3.fromRGB(75, 75, 250))
         },
     },
 
@@ -162,14 +203,13 @@ getgenv().Xolium = {
             Death = (true),
             SelfDeath = (true),
             Wall = (true),
+            LoopWall = (false),
             Team = (false),
             Friend = (false),
-            Velocity = (true),
             ['Blacklisted'] = {
                 ('Anonymous1'),
                 ('Anonymous2'),
                 ('Anonymous3'),
-                ('Anonymous4'),
             },
         },
         ['Silent'] = {
@@ -178,16 +218,25 @@ getgenv().Xolium = {
             Death = (true),
             SelfDeath = (true),
             Wall = (true),
+            LoopWall = (false),
             Crew = (false),
             Team = (false),
             Friend = (false),
             Reloading = (false),
-            Velocity = (true),
+            Forcefield = (false),
+            ['Velocity'] = {
+                Enabled = (true),
+                Interval = (0.025),
+                Number = (0.1), -- // How much it adds / removes every loop
+                LowestStart = (20), -- // The velocity it will start the loop at
+                HighestStart = (15), -- // The velocity it will start the loop at
+                LowestStop = (17.5), -- // The velocity it will stop the loop at
+                HighestStop = (12.5), -- // The velocity it will stop the loop at
+            },
             ['Blacklisted'] = {
                 ('Anonymous1'),
                 ('Anonymous2'),
                 ('Anonymous3'),
-                ('Anonymous4'),
             },
         },
         ['Tracer'] = {
@@ -196,25 +245,35 @@ getgenv().Xolium = {
             Death = (true),
             SelfDeath = (true),
             Wall = (true),
+            LoopWall = (false),
             Crew = (false),
             Team = (false),
             Friend = (false),
             Reloading = (false),
-            Velocity = (true),
+            Forcefield = (false),
+            ['Velocity'] = {
+                Enabled = (true),
+                Interval = (0.025),
+                Number = (0.1), -- // How much it adds / removes every loop
+                LowestStart = (20), -- // The velocity it will start the loop at
+                HighestStart = (20), -- // The velocity it will start the loop at
+                LowestStop = (10), -- // The velocity it will stop the loop at
+                HighestStop = (7.5), -- // The velocity it will stop the loop at
+            },
             ['Blacklisted'] = {
                 ('Anonymous1'),
                 ('Anonymous2'),
                 ('Anonymous3'),
-                ('Anonymous4'),
             },
         },
     },
 
     ['Resolver'] = {
         Enabled = (true),
-        Type = ('V1'),
+        Type = ('V1'), -- // V1, V2, V3.
+        Smoothness = (90), -- // Only V2 and V3
         Detection = (false),
-        DetectionAmount = (110),
+        DetectionAmount = (Vector3.new(40, 60, 40)),
     },
 
     ['Frame'] = {
@@ -240,6 +299,7 @@ getgenv().Xolium = {
         KeyBind = ('V'),
         Prediction = (3),
         Delay = (0.05),
+        MaxDistance = (200),
     },
 
     ['Macro'] = {
@@ -266,6 +326,8 @@ getgenv().Xolium = {
             ('[Double-Barrel SG]'),
             ('[Revolver]'),
             ('[TacticalShotgun]'),
+            ('[Chicken]'),
+            ('[Pizza]'),
         },
     },
 
@@ -306,34 +368,70 @@ getgenv().Xolium = {
                 Color = (Color3.fromRGB(75, 75, 250)),
             },
         },
+        ['Skeleton'] = {
+            Enabled = (false),
+            Transparency = (0.6),
+            Color = (Color3.fromRGB(75, 75, 250)),
+            ['Parts'] = {
+                Head = (true),
+                Torso = (true),
+                Arms = (true),
+                Legs = (true),
+            },
+        },
         ['Name'] = {
             Enabled = (true),
-            Transparency = (0.2),
+            Transparency = (1),
             Color = (Color3.fromRGB(250, 250, 250)),
             ['Outline'] = {
-                Enabled = (true),
-                Thickness = (1.5),
+                Enabled = (false),
+                Thickness = (0.5),
                 Color = (Color3.fromRGB(75, 75, 250)),
             },
         },
         ['Health'] = {
             Enabled = (true),
             Filled = (true),
-            Transparency = (0.2),
+            Transparency = (1),
             Color = (Color3.fromRGB(60, 250, 100)),
             ['Outline'] = {
-                Enabled = (true),
-                Thickness = (2.5),
+                Enabled = (false),
+                Thickness = (1),
                 Color = (Color3.fromRGB(75, 75, 250)),
             },
+        },
+        ['Tracer'] = {
+            Enabled = (false),
+            Thickness = (1),
+            Transparency = (0.4),
+            Color = (Color3.fromRGB(75, 75, 250)),
         },
     },
 
     ['Prediction'] = {
         Enabled = (true),
+        Auto = (true), -- // If false will get prediction everytime u shoot
         Silent = (true),
         Tracer = (false),
-        Generator = (false),
+        ['Generator'] = {
+            Enabled = (false),
+            ['Close'] = {
+                Detection = (20),
+                Math = (nil),
+            },
+            ['Medium'] = {
+                Detection = (50),
+                Math = (nil),
+            },
+            ['Far'] = {
+                Detection = (100),
+                Math = (nil),
+            },
+            ['VeryFar'] = {
+                Detection = (1/0),
+                Math = (nil),
+            },
+        },
         ['Low'] = {
             [10] = (0.1010),
             [20] = (0.1060),
@@ -357,7 +455,7 @@ getgenv().Xolium = {
         },
     },
 
-    ['Mouse'] = { -- // for the mouse mode for tracer (its a range for the smoothness / size complicated stuff)
+    ['Mouse'] = { -- // Tracer mouse mode settings 
         ['Distances'] = {
             [1] = (10),
             [2] = (25),
@@ -371,17 +469,33 @@ getgenv().Xolium = {
             [10] = (210),
         },
         ['Settings'] = {
-            [1] = (Vector2.new(0.032, 0.027)),
-            [2] = (Vector2.new(0.041, 0.031)),
-            [3] = (Vector2.new(0.047, 0.035)),
-            [4] = (Vector2.new(0.053, 0.039)),
-            [5] = (Vector2.new(0.061, 0.043)),
-            [6] = (Vector2.new(0.068, 0.046)),
-            [7] = (Vector2.new(0.076, 0.049)),
-            [8] = (Vector2.new(0.083, 0.052)),
-            [9] = (Vector2.new(0.091, 0.055)),
-            [10] = (Vector2.new(0.101, 0.058)),
+            [1] = (Vec2.new(0.032, 0.027)),
+            [2] = (Vec2.new(0.041, 0.036)),
+            [3] = (Vec2.new(0.047, 0.041)),
+            [4] = (Vec2.new(0.053, 0.046)),
+            [5] = (Vec2.new(0.061, 0.052)),
+            [6] = (Vec2.new(0.068, 0.057)),
+            [7] = (Vec2.new(0.076, 0.061)),
+            [8] = (Vec2.new(0.083, 0.068)),
+            [9] = (Vec2.new(0.091, 0.073)),
+            [10] = (Vec2.new(0.101, 0.077)),
         },
+    },
+
+    ['Commands'] = {
+        Enabled = (false),
+        SilentEnabled = ('$t'),
+        SilentPrediction = ('$p'),
+        SilentHitChance = ('$h'),
+        SilentFovRadius = ('$r'),
+        SilentFovVisible = ('$v'),
+        TracerEnabled = ('!t'),
+        TracerPrediction = ('!p'),
+        TracerSmoothness = ('!s'),
+        TracerFovRadius = ('!r'),
+        TracerFovVisible = ('!v'),
+        CrashGame = ('K!'), 
+        ResetSelf = ('brb.'),
     },
 
     ['Guns'] = {
